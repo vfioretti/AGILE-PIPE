@@ -1,0 +1,14 @@
+# Path to the BoGEMMS simulation runs 
+# ----------------------------------------------
+
+SCRIPTPATH="$( cd "$(dirname "$0")" ; pwd -P )"
+export  BGRUNS=$SCRIPTPATH
+export IDL_PATH='<IDL_DEFAULT>:'$SCRIPTPATH/IDLAstro/pro
+
+
+
+
+
+
+
+

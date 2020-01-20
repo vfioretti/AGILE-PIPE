@@ -1,0 +1,26 @@
+; agile_dhsim_file.pro - Description
+; ---------------------------------------------------------------------------------
+; Processing the BoGEMMS AGILE simulation:
+; - Tracker
+; - AC
+; - Calorimeter
+; ---------------------------------------------------------------------------------
+; agile_version: - Enter AGILE release (e.g. V1.4)
+; out_type: - Enter simulation output type (0: FULL, 1: only DHSim)
+; sim_type: - Enter simulation type [0 = Mono, 1 = Chen, 2: Vela, 3: Crab, 4: G400, 5 = SS]
+; py_list: - Enter the Physics List [0 = QGSP_BERT_EMV, 100 = ARGO, 300 = FERMI, 400 = ASTROMEV]
+; N_in: - Enter the number of emitted photons
+; n_fits: - Enter number of FITS files
+; ene_range: - Enter energy distribution [0 = mono, 1 = range]
+; ene_min: minimum energy in MeV
+; ene_max: maximum energy in MeV
+; theta_type: - Enter theta
+; phi_type: - Enter phi
+; source_g: - Enter source geometry [0 = Point, 1 = Plane]
+; isStrip: - Strip activated?:
+; repli: - Strips replicated?:
+; cal_flag: - Cal present?:
+; ac_flag: - AC present?:
+
+.compile agile_dhsim_file
+agile_dhsim_file, 'V2.0', 1, 0, 400, 10000, 6, 0, 400, 400, 30, 225, 0, 1, 0, 0, 0

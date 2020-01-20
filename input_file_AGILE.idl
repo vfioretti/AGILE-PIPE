@@ -11,6 +11,7 @@
 ; py_list: - Enter the Physics List [0 = QGSP_BERT_EMV, 100 = ARGO, 300 = FERMI, 400 = ASTROMEV]
 ; N_in: - Enter the number of emitted photons
 ; n_fits: - Enter number of FITS files
+; part_type: - particle type [ph = photons, mu = muons]
 ; ene_range: - Enter energy distribution [0 = mono, 1 = range]
 ; ene_min: minimum energy in MeV
 ; ene_max: maximum energy in MeV

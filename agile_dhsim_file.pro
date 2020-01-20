@@ -796,7 +796,7 @@ for ifile=0, n_fits-1 do begin
 	     z_pos(j) = ent_z(j) + ((exit_z(j) - ent_z(j))/2.)
 	    endfor
     
-	    openw,lun, outdir+'/G4.RAW.KALMAN.AGILE'+agile_version+'.'+py_name+'.'+sim_name+'.'+stripname+'.'+sname+'.'+strmid(strtrim(string(N_in),1),0,10)+part_type'.'+ene_type+'MeV.'+strmid(strtrim(string(theta_type),1),0,10)+'.'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat',/get_lun
+	    openw,lun, outdir+'/G4.RAW.KALMAN.AGILE'+agile_version+'.'+py_name+'.'+sim_name+'.'+stripname+'.'+sname+'.'+strmid(strtrim(string(N_in),1),0,10)+part_type+'.'+ene_type+'MeV.'+strmid(strtrim(string(theta_type),1),0,10)+'.'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat',/get_lun
 	    ; ASCII Columns:
 	    ; - c1 = event id
 	    ; - c2 = Silicon layer ID

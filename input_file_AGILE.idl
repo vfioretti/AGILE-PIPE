@@ -24,4 +24,4 @@
 ; ac_flag: - AC present?:
 
 .compile agile_dhsim_file
-agile_dhsim_file, 'V2.0', 1, 0, 400, 10000, 6, 0, 400, 400, 30, 225, 0, 1, 0, 0, 0
+agile_dhsim_file, 'V2.0', 1, 2, 400, 500000, 87, 'ph', 1, 300, 1000, 30, 0, 1, 1, 0, 1, 1

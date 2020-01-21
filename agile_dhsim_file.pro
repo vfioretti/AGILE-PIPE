@@ -842,7 +842,7 @@ for ifile=0, n_fits-1 do begin
     
     	Free_lun, lun
     
-    	openw,lun,outdir+'/G4.RAW.GENERAL.AGILE'+agile_version+'.'+py_name+'.'+sim_name+'.'+stripname+'.'+sname+'.'+strmid(strtrim(string(N_in),1),0,10)+'ph.'+ene_type+'MeV.'+strmid(strtrim(string(theta_type),1),0,10)+'.'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat',/get_lun
+    	openw,lun,outdir+'/G4.RAW.GENERAL.AGILE'+agile_version+'.'+py_name+'.'+sim_name+'.'+stripname+'.'+sname+'.'+strmid(strtrim(string(N_in),1),0,10)+part_type+'.'+ene_type+'MeV.'+strmid(strtrim(string(theta_type),1),0,10)+'.'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat',/get_lun
     	; ASCII Columns:
     	; - c1 = event ID
     	; - c2 = Silicon layer ID

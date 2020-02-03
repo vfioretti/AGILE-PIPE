@@ -35,8 +35,8 @@ import sys, os
 import matplotlib.pyplot as plt
 
 
-theta_deg = 0.0
-phi_deg = 0.
+theta_deg = 30.0
+phi_deg = 225.
 theta = theta_deg*(np.pi/180.)
 phi = phi_deg*(np.pi/180.)
 
@@ -57,7 +57,8 @@ K_t = 0.05
 CF_t = 0.5
 Conv_t = 0.245
 
-plane_distance = 18.7  # mm
+#plane_distance = 18.7  # mm (BASELINE DISTANCE)
+plane_distance = 19.0  # mm
 dist_tray = 2.   # mm
 
 Al_t = plane_distance - dist_tray - (Si_t + Glue_t + K_t + Conv_t) - (K_t + Glue_t + Si_t) - (CF_t*2.)
@@ -99,11 +100,13 @@ print '% - Tray height [mm]:', Lower_module_t + Central_module_t + Upper_module_
 
 TRK_t = Lower_module_t_NoConv + Central_module_t + Upper_module_t
 
-for k in xrange(N_tray):
+
+for k in xrange(1, N_tray):
 	if k > 2: 
 		TRK_t = TRK_t + Lower_module_t + Central_module_t + Upper_module_t + dist_tray 
 	else: 
 		TRK_t = TRK_t + Lower_module_t_NoConv + Central_module_t + Upper_module_t + dist_tray
+
 
 
 TRK_t = TRK_t - Lower_module_t_NoConv - Upper_module_t

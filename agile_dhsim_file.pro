@@ -246,6 +246,9 @@ endif
 if (sim_type EQ 5) then begin
    sim_name = 'SS'
 endif
+if (sim_type EQ 6) then begin
+   sim_name = 'RANGE'
+endif
 
 if (source_g EQ 0) then begin
  sdir = '/Point'

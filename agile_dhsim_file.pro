@@ -1580,6 +1580,313 @@ for ifile=0, n_fits-1 do begin
     
     endfor
     
+    if (out_type EQ 0) then begin 
+        print, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    	print, '                      Tracker   '
+    	print, '            E_th = 3*5 keV applied for AIV testing'
+    	print, '             L0.5 - X-Y layers merging '
+    	print, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+    
+    
+		Glob_event_id_acap_aiv = -1l 
+		Glob_vol_id_acap_aiv = -1l 
+		Glob_moth_id_acap_aiv = -1l 
+		Glob_Strip_id_acap_aiv = -1l 
+		Glob_Strip_type_acap_aiv = -1l 
+		Glob_Si_id_acap_aiv = -1l 
+		Glob_tray_id_acap_aiv = -1l 
+		Glob_pos_acap_aiv = -1.
+		Glob_zpos_acap_aiv = -1. 
+		Glob_energy_dep_acap_aiv = -1.
+		
+		E_th_AIV = 15. ; keV
+	
+		for j=0l, N_trig -1 do begin
+	   
+		   where_acap_x = where(Glob_energy_dep_x_acap[*,j] GE E_th_AIV)
+	
+		   if (where_acap_x(0) NE -1) then begin
+			 Glob_vol_id_x_acap_temp = Glob_vol_id_x_acap[where_acap_x,j]
+			 Glob_moth_id_x_acap_temp = Glob_moth_id_x_acap[where_acap_x,j]
+			 Glob_Strip_id_x_acap_temp = Glob_Strip_id_x_acap[where_acap_x,j]
+			 Glob_Strip_type_x_acap_temp = Glob_Strip_type_x_acap[where_acap_x,j]
+			 Glob_Si_id_x_acap_temp = Glob_Si_id_x_acap[where_acap_x,j]
+			 Glob_tray_id_x_acap_temp = Glob_tray_id_x_acap[where_acap_x,j]
+			 Glob_xpos_x_acap_temp = Glob_xpos_x_acap[where_acap_x,j]
+			 Glob_zpos_x_acap_temp = Glob_zpos_x_acap[where_acap_x,j]
+			 Glob_energy_dep_x_acap_temp = Glob_energy_dep_x_acap[where_acap_x,j]
+		   endif
+	
+	
+		   where_acap_y = where(Glob_energy_dep_y_acap[*,j] GE E_th_AIV)
+	 
+		   if (where_acap_y(0) NE -1) then begin
+			 Glob_vol_id_y_acap_temp = Glob_vol_id_y_acap[where_acap_y,j]
+			 Glob_moth_id_y_acap_temp = Glob_moth_id_y_acap[where_acap_y,j]
+			 Glob_Strip_id_y_acap_temp = Glob_Strip_id_y_acap[where_acap_y,j]
+			 Glob_Strip_type_y_acap_temp = Glob_Strip_type_y_acap[where_acap_y,j]
+			 Glob_Si_id_y_acap_temp = Glob_Si_id_y_acap[where_acap_y,j]
+			 Glob_tray_id_y_acap_temp = Glob_tray_id_y_acap[where_acap_y,j]
+			 Glob_ypos_y_acap_temp = Glob_ypos_y_acap[where_acap_y,j]
+			 Glob_zpos_y_acap_temp = Glob_zpos_y_acap[where_acap_y,j]
+			 Glob_energy_dep_y_acap_temp = Glob_energy_dep_y_acap[where_acap_y,j]
+		   endif
+	
+		   if ((where_acap_y(0) NE -1) AND (where_acap_x(0) NE -1)) then begin
+			Glob_vol_id_acap_temp = [Glob_vol_id_y_acap_temp, Glob_vol_id_x_acap_temp]
+			Glob_moth_id_acap_temp = [Glob_moth_id_y_acap_temp, Glob_moth_id_x_acap_temp]
+			Glob_Strip_id_acap_temp = [Glob_Strip_id_y_acap_temp, Glob_Strip_id_x_acap_temp]
+			Glob_Strip_type_acap_temp = [Glob_Strip_type_y_acap_temp, Glob_Strip_type_x_acap_temp]
+			Glob_Si_id_acap_temp = [Glob_Si_id_y_acap_temp, Glob_Si_id_x_acap_temp]
+			Glob_tray_id_acap_temp = [Glob_tray_id_y_acap_temp, Glob_tray_id_x_acap_temp]
+			Glob_pos_acap_temp = [Glob_ypos_y_acap_temp, Glob_xpos_x_acap_temp]
+			Glob_zpos_acap_temp = [Glob_zpos_y_acap_temp, Glob_zpos_x_acap_temp]
+			Glob_energy_dep_acap_temp = [Glob_energy_dep_y_acap_temp, Glob_energy_dep_x_acap_temp]
+		   endif else begin
+			if ((where_acap_y(0) NE -1) AND (where_acap_x(0) EQ -1)) then begin
+			 Glob_vol_id_acap_temp = Glob_vol_id_y_acap_temp
+			 Glob_moth_id_acap_temp = Glob_moth_id_y_acap_temp
+			 Glob_Strip_id_acap_temp = Glob_Strip_id_y_acap_temp
+			 Glob_Strip_type_acap_temp = Glob_Strip_type_y_acap_temp
+			 Glob_Si_id_acap_temp = Glob_Si_id_y_acap_temp
+			 Glob_tray_id_acap_temp = Glob_tray_id_y_acap_temp
+			 Glob_pos_acap_temp = Glob_ypos_y_acap_temp
+			 Glob_zpos_acap_temp = Glob_zpos_y_acap_temp
+			 Glob_energy_dep_acap_temp = Glob_energy_dep_y_acap_temp
+			endif else begin
+			 if ((where_acap_y(0) EQ -1) AND (where_acap_x(0) NE -1)) then begin
+			  Glob_vol_id_acap_temp = Glob_vol_id_x_acap_temp
+			  Glob_moth_id_acap_temp = Glob_moth_id_x_acap_temp
+			  Glob_Strip_id_acap_temp = Glob_Strip_id_x_acap_temp
+			  Glob_Strip_type_acap_temp = Glob_Strip_type_x_acap_temp
+			  Glob_Si_id_acap_temp = Glob_Si_id_x_acap_temp
+			  Glob_tray_id_acap_temp = Glob_tray_id_x_acap_temp
+			  Glob_pos_acap_temp = Glob_xpos_x_acap_temp
+			  Glob_zpos_acap_temp = Glob_zpos_x_acap_temp
+			  Glob_energy_dep_acap_temp = Glob_energy_dep_x_acap_temp
+			 endif
+			endelse
+		   endelse   
+	   
+		   tray_sort_arr = sort(Glob_tray_id_acap_temp)
+		
+		   Glob_vol_id_acap_temp = Glob_vol_id_acap_temp[reverse(tray_sort_arr)]
+		   Glob_moth_id_acap_temp = Glob_moth_id_acap_temp[reverse(tray_sort_arr)]
+		   Glob_Strip_id_acap_temp = Glob_Strip_id_acap_temp[reverse(tray_sort_arr)]
+		   Glob_Strip_type_acap_temp = Glob_Strip_type_acap_temp[reverse(tray_sort_arr)]
+		   Glob_Si_id_acap_temp = Glob_Si_id_acap_temp[reverse(tray_sort_arr)]
+		   Glob_tray_id_acap_temp = Glob_tray_id_acap_temp[reverse(tray_sort_arr)]
+		   Glob_pos_acap_temp = Glob_pos_acap_temp[reverse(tray_sort_arr)]
+		   Glob_zpos_acap_temp = Glob_zpos_acap_temp[reverse(tray_sort_arr)]
+		   Glob_energy_dep_acap_temp = Glob_energy_dep_acap_temp[reverse(tray_sort_arr)]
+	
+		   vol_id_intray = -1l
+		   moth_id_intray = -1l
+		   Strip_id_intray = -1l
+		   Strip_type_intray = -1l
+		   Si_id_intray = -1l
+		   tray_id_intray = -1l
+		   pos_intray = -1.
+		   zpos_intray = -1.
+		   energy_dep_intray = -1.
+		   
+			intray = 0l
+			while(1) do begin
+			   where_tray_eq = where(Glob_tray_id_acap_temp EQ Glob_tray_id_acap_temp(intray), complement = where_other_tray)
+		   
+			   vol_id_extract = Glob_vol_id_acap_temp[where_tray_eq]
+			   moth_id_extract = Glob_moth_id_acap_temp[where_tray_eq]
+			   Strip_id_extract = Glob_Strip_id_acap_temp[where_tray_eq]
+			   Strip_type_extract = Glob_Strip_type_acap_temp[where_tray_eq]
+			   Si_id_extract = Glob_Si_id_acap_temp[where_tray_eq]
+			   tray_id_extract = Glob_tray_id_acap_temp[where_tray_eq]
+			   pos_extract = Glob_pos_acap_temp[where_tray_eq]
+			   zpos_extract = Glob_zpos_acap_temp[where_tray_eq]
+			   energy_dep_extract = Glob_energy_dep_acap_temp[where_tray_eq]
+		   
+			   where_Y = where(Si_id_extract EQ 1)
+			   if (where_Y(0) NE -1) then begin
+				 vol_id_intray = [vol_id_intray, vol_id_extract[where_Y]]
+				 moth_id_intray = [moth_id_intray, moth_id_extract[where_Y]]
+				 Strip_id_intray = [Strip_id_intray, Strip_id_extract[where_Y]]
+				 Strip_type_intray = [Strip_type_intray, Strip_type_extract[where_Y]]
+				 Si_id_intray = [Si_id_intray, Si_id_extract[where_Y]]
+				 tray_id_intray = [tray_id_intray, tray_id_extract[where_Y]]
+				 pos_intray = [pos_intray, pos_extract[where_Y]]
+				 zpos_intray = [zpos_intray, zpos_extract[where_Y]]
+				 energy_dep_intray = [energy_dep_intray, energy_dep_extract[where_Y]]         
+			   endif
+			   where_X = where(Si_id_extract EQ 0)
+			   if (where_X(0) NE -1) then begin
+				 vol_id_intray = [vol_id_intray, vol_id_extract[where_X]]
+				 moth_id_intray = [moth_id_intray, moth_id_extract[where_X]]
+				 Strip_id_intray = [Strip_id_intray, Strip_id_extract[where_X]]
+				 Strip_type_intray = [Strip_type_intray, Strip_type_extract[where_X]]
+				 Si_id_intray = [Si_id_intray, Si_id_extract[where_X]]
+				 tray_id_intray = [tray_id_intray, tray_id_extract[where_X]]
+				 pos_intray = [pos_intray, pos_extract[where_X]]
+				 zpos_intray = [zpos_intray, zpos_extract[where_X]]
+				 energy_dep_intray = [energy_dep_intray, energy_dep_extract[where_X]]         
+			   endif
+			 N_tray_eq = n_elements(where_tray_eq)
+			 if where_tray_eq(N_tray_eq-1) LT (n_elements(Glob_tray_id_acap_temp)-1) then begin
+			  intray = where_tray_eq(N_tray_eq-1)+1
+			 endif else break
+			endwhile
+		
+			vol_id_temp = vol_id_intray[1:*]
+			moth_id_temp = moth_id_intray[1:*]
+			Strip_id_temp = Strip_id_intray[1:*]
+			Strip_type_temp = Strip_type_intray[1:*]
+			Si_id_temp = Si_id_intray[1:*]
+			tray_id_temp = tray_id_intray[1:*]
+			pos_temp = pos_intray[1:*]
+			zpos_temp = zpos_intray[1:*]
+			energy_dep_temp = energy_dep_intray[1:*]
+		
+			event_id_temp = lonarr(n_elements(vol_id_temp))
+			for k=0l, n_elements(vol_id_temp)-1 do begin
+			 event_id_temp(k) = event_array(j)
+			endfor
+		
+			Glob_event_id_acap_aiv = [Glob_event_id_acap_aiv, event_id_temp]
+			Glob_vol_id_acap_aiv = [Glob_vol_id_acap_aiv, vol_id_temp]
+			Glob_moth_id_acap_aiv = [Glob_moth_id_acap_aiv, moth_id_temp] 
+			Glob_Strip_id_acap_aiv = [Glob_Strip_id_acap_aiv, Strip_id_temp]
+			Glob_Strip_type_acap_aiv = [Glob_Strip_type_acap_aiv, Strip_type_temp]
+			Glob_Si_id_acap_aiv = [Glob_Si_id_acap_aiv, Si_id_temp]
+			Glob_tray_id_acap_aiv = [Glob_tray_id_acap_aiv, tray_id_temp]
+			Glob_pos_acap_aiv = [Glob_pos_acap_aiv, pos_temp]
+			Glob_zpos_acap_aiv = [Glob_zpos_acap_aiv, zpos_temp]
+			Glob_energy_dep_acap_aiv = [Glob_energy_dep_acap_aiv, energy_dep_temp]
+	
+		endfor
+	
+		Glob_event_id_acap_aiv = Glob_event_id_acap_aiv[1:*]
+		Glob_vol_id_acap_aiv =  Glob_vol_id_acap_aiv[1:*]
+		Glob_moth_id_acap_aiv =  Glob_moth_id_acap_aiv[1:*]
+		Glob_Strip_id_acap_aiv =  Glob_Strip_id_acap_aiv[1:*]
+		Glob_Strip_type_acap_aiv =  Glob_Strip_type_acap_aiv[1:*]
+		Glob_Si_id_acap_aiv =  Glob_Si_id_acap_aiv[1:*]
+		Glob_tray_id_acap_aiv =  Glob_tray_id_acap_aiv[1:*]
+		Glob_pos_acap_aiv = Glob_pos_acap_aiv[1:*]
+		Glob_zpos_acap_aiv = Glob_zpos_acap_aiv[1:*]
+		Glob_energy_dep_acap_aiv = Glob_energy_dep_acap_aiv[1:*]
+	
+	
+		; Conversion from tray ID (starting from bottom) to plane ID (starting from the top)
+	
+		Glob_plane_id_acap_aiv = intarr(n_elements(Glob_tray_id_acap_aiv))
+	
+		for j=0l, n_elements(Glob_tray_id_acap_aiv)-1 do begin
+		 if (Glob_Si_id_acap_aiv(j) EQ 0) then begin
+			temp_plane_x = Glob_tray_id_acap_aiv(j) - N_plane
+			if (temp_plane_x GT 0) then Glob_plane_id_acap_aiv(j) = temp_plane_x else Glob_plane_id_acap_aiv(j) = (-1.*temp_plane_x) + 2
+		 endif
+		 if (Glob_Si_id_acap_aiv(j) EQ 1) then begin
+			temp_plane_y = Glob_tray_id_acap_aiv(j) - (N_plane-1)
+			if (temp_plane_y GT 0) then Glob_plane_id_acap_aiv(j) = temp_plane_y else Glob_plane_id_acap_aiv(j) = (-1.*temp_plane_y) + 2
+		 endif
+		endfor
+    
+		print, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+		print, '                      Tracker   '
+		print, '      Saving the DHSim input file for AIV testing   '
+		print, '                    DIGI = yes '
+		print, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
+	
+	
+		openw,lun,outdir+'/G4_AIV_YPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat',/get_lun
+		; ASCII Columns:
+		; - c1 = event ID
+		; - c2 = plane ID
+		; - c3 = readout strip ID
+		; - c4 = -999
+		; - c5 = -999
+		; - c6 = energy dep in keV
+		; - c7 = -999
+	  
+		event_start = -1
+		j=0l
+		while (1) do begin
+			where_event_eq = where(Glob_event_id_acap_aiv EQ Glob_event_id_acap_aiv(j))
+			Glob_Si_id_acap_temp = Glob_Si_id_acap_aiv(where_event_eq)
+			Glob_Strip_id_acap_temp = Glob_Strip_id_acap_aiv(where_event_eq)
+			Glob_tray_id_acap_temp  = Glob_tray_id_acap_aiv(where_event_eq)
+			Glob_plane_id_acap_temp  = Glob_plane_id_acap_aiv(where_event_eq)
+			Glob_energy_dep_acap_temp = Glob_energy_dep_acap_aiv(where_event_eq)    
+			Glob_pos_acap_temp = Glob_pos_acap_aiv(where_event_eq)
+			Glob_zpos_acap_temp = Glob_zpos_acap_aiv(where_event_eq)
+		
+			; The strip readout id changed from 0 - 3071 range to 0 - 1536
+			Glob_Strip_readout_id_acap_temp = Glob_Strip_id_acap_temp/2
+			where_x = where(Glob_Si_id_acap_temp EQ 0)
+			; The event id starts from 1 (1 added in the file writing)
+			; The Strip ID starts from 1 (1 added in the file writing)
+			if (where_x(0) NE -1) then begin
+			 for r=0l, n_elements(where_x)-1 do begin
+				printf, lun, (Glob_event_id_acap_aiv(j)+1), Glob_plane_id_acap_temp(where_x(r)), (Glob_Strip_readout_id_acap_temp(where_x(r)) + 1), -999, -999, Glob_energy_dep_acap_temp(where_x(r)), -999, format='(I6,I5,I5,I5,I5,F10.5,I5)'
+			
+			 endfor
+			endif
+			N_event_eq = n_elements(where_event_eq)
+			if where_event_eq(N_event_eq-1) LT (n_elements(Glob_event_id_acap_aiv)-1) then begin
+			  j = where_event_eq(N_event_eq-1)+1
+			endif else break
+		endwhile
+	
+		Free_lun, lun
+	
+		openw,lun,outdir+'/G4_AIV_XPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat',/get_lun
+		; ASCII Columns:
+		; - c1 = event ID
+		; - c2 = plane ID
+		; - c3 = readout strip ID
+		; - c4 = -999
+		; - c5 = -999
+		; - c6 = energy dep in keV
+		; - c7 = -999    
+	
+		event_start = -1
+		j=0l
+		while (1) do begin
+			where_event_eq = where(Glob_event_id_acap_aiv EQ Glob_event_id_acap_aiv(j))
+			Glob_Si_id_acap_temp = Glob_Si_id_acap_aiv(where_event_eq)
+			Glob_Strip_id_acap_temp = Glob_Strip_id_acap_aiv(where_event_eq)
+			Glob_tray_id_acap_temp  = Glob_tray_id_acap_aiv(where_event_eq)
+			Glob_plane_id_acap_temp  = Glob_plane_id_acap_aiv(where_event_eq)
+			Glob_energy_dep_acap_temp = Glob_energy_dep_acap_aiv(where_event_eq)    
+			Glob_pos_acap_temp = Glob_pos_acap_aiv(where_event_eq)
+			Glob_zpos_acap_temp = Glob_zpos_acap_aiv(where_event_eq)
+	
+			; The strip readout id changed from 0 - 3071 range to 0 - 1535
+			Glob_Strip_readout_id_acap_temp = Glob_Strip_id_acap_temp/2
+		
+			; Inverting the Yv strip value to obtain the Xk value
+			Glob_Strip_GAMS_id_acap_temp = lonarr(n_elements(Glob_Strip_readout_id_acap_temp))
+			for jstrip=0, n_elements(Glob_Strip_readout_id_acap_temp)-1 do begin
+				Glob_Strip_GAMS_id_acap_temp(jstrip) = ((N_strip/2)-1) - Glob_Strip_readout_id_acap_temp(jstrip)   
+			endfor
+		
+			; The event id starts from 1 (1 added in the file writing)
+			; The Strip ID starts from 1 (1 added in the file writing)  
+			where_y = where(Glob_Si_id_acap_temp EQ 1)    
+			if (where_y(0) NE -1) then begin
+			 for r=0l, n_elements(where_y)-1 do begin
+				printf, lun, (Glob_event_id_acap_aiv(j)+1), Glob_plane_id_acap_temp(where_y(r)), (Glob_Strip_GAMS_id_acap_temp(where_y(r)) + 1), -999, -999, Glob_energy_dep_acap_temp(where_y(r)), -999, format='(I6,I5,I5,I5,I5,F10.5,I5)'
+			
+			 endfor
+			endif
+			N_event_eq = n_elements(where_event_eq)
+			if where_event_eq(N_event_eq-1) LT (n_elements(Glob_event_id_acap_aiv)-1) then begin
+			  j = where_event_eq(N_event_eq-1)+1
+			endif else break
+		endwhile
+	
+		Free_lun, lun
+
+    
+    endif
     
     print, '%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%'
     print, '                      Tracker   '

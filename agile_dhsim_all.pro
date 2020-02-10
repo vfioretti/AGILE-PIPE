@@ -469,7 +469,43 @@ aa_kalman_edep = -1.
 aa_kalman_strip_number = -1.
 aa_kalman_pair = -1l
 
+if (out_type EQ 0) then begin
+	; - G4_AIV_XPLANE_AGILE<version>_<phys>List_<strip>_<point>_<n_in><part_type>_<energy>MeV_<theta>_<phi>.all.dat
+	; ASCII Columns:
+	; - c1 = event ID
+	; - c2 = plane ID
+	; - c3 = readout strip ID
+	; - c4 = -999
+	; - c5 = -999
+	; - c6 = energy dep in keV
+	; - c7 = -999    event_start = -1
+	
+	aiv_xplane_event_id = -1l
+	aiv_xplane_plane_id = -1l
+	aiv_xplane_readstreap_id = -1l
+	aiv_xplane_c4 = -1l
+	aiv_xplane_c5 = -1l
+	aiv_xplane_edep = -1.
+	aiv_xplane_c7 = -1l
 
+	; - G4_AIV_YPLANE_AGILE<version>_<phys>List_<strip>_<point>_<n_in><part_type>_<energy>MeV_<theta>_<phi>.all.dat
+	; ASCII Columns:
+	; - c1 = event ID
+	; - c2 = plane ID
+	; - c3 = readout strip ID
+	; - c4 = -999
+	; - c5 = -999
+	; - c6 = energy dep in keV
+	; - c7 = -999
+	
+	aiv_yplane_event_id = -1l
+	aiv_yplane_plane_id = -1l
+	aiv_yplane_readstreap_id = -1l
+	aiv_yplane_c4 = -1l
+	aiv_yplane_c5 = -1l
+	aiv_yplane_edep = -1.
+	aiv_yplane_c7 = -1l
+endif
 
 ; - G4_GAMS_XPLANE_AGILE<version>_<phys>List_<strip>_<point>_<n_in><part_type>_<energy>MeV_<theta>_<phi>.all.dat
 ; ASCII Columns:
@@ -583,7 +619,28 @@ for ifile=0, n_files-1 do begin
     digi_general_tray_id = [digi_general_tray_id, c5]
     digi_general_plane_id = [digi_general_plane_id, c6]
     digi_general_strip_id = [digi_general_strip_id, c7]
-    digi_general_edep = [digi_general_edep, c8]  
+    digi_general_edep = [digi_general_edep, c8]
+    
+    filenamedat_aiv_xplane = filepath+'G4_AIV_XPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat'   
+    readcol, filenamedat_aiv_xplane, c1, c2, c3, c4, c5, c6, c7, format='(l,l,l,l,l,d,l)' 
+    aiv_xplane_event_id = [aiv_xplane_event_id, c1]
+    aiv_xplane_plane_id = [aiv_xplane_plane_id, c2]
+    aiv_xplane_readstreap_id = [aiv_xplane_readstreap_id, c3]
+    aiv_xplane_c4 = [aiv_xplane_c4, c4]
+    aiv_xplane_c5 = [aiv_xplane_c5, c5]
+    aiv_xplane_edep = [aiv_xplane_edep, c6]
+    aiv_xplane_c7 = [aiv_xplane_c7, c7]
+    
+    filenamedat_aiv_yplane = filepath+'G4_AIV_YPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat'   
+    readcol, filenamedat_aiv_yplane, c1, c2, c3, c4, c5, c6, c7, format='(l,l,l,l,l,d,l)' 
+    aiv_yplane_event_id = [aiv_yplane_event_id, c1]
+    aiv_yplane_plane_id = [aiv_yplane_plane_id, c2]
+    aiv_yplane_readstreap_id = [aiv_yplane_readstreap_id, c3]
+    aiv_yplane_c4 = [aiv_yplane_c4, c4]
+    aiv_yplane_c5 = [aiv_yplane_c5, c5]
+    aiv_yplane_edep = [aiv_yplane_edep, c6]
+    aiv_yplane_c7 = [aiv_yplane_c7, c7]    
+      
   endif
 
     filenamedat_aa_strip = filepath+'/G4.AA.STRIP.AGILE'+agile_version+'.'+py_name+'.'+sim_name+'.'+stripname+'.'+sname+'.'+strmid(strtrim(string(N_in),1),0,10)+part_type+'.'+ene_type+'MeV.'+strmid(strtrim(string(theta_type),1),0,10)+'.'+strmid(strtrim(string(phi_type),1),0,10)+'.'+strtrim(string(ifile),1)+'.dat'
@@ -938,6 +995,84 @@ if (out_type EQ 0) then begin
 	endwhile
 
 	Free_lun, lun
+	
+	aiv_xplane_event_id = aiv_xplane_event_id[1:*]
+	aiv_xplane_plane_id = aiv_xplane_plane_id[1:*]
+	aiv_xplane_readstreap_id = aiv_xplane_readstreap_id[1:*]
+	aiv_xplane_c4 = aiv_xplane_c4[1:*]
+	aiv_xplane_c5 = aiv_xplane_c5[1:*]
+	aiv_xplane_edep = aiv_xplane_edep[1:*]
+	aiv_xplane_c7 = aiv_xplane_c7[1:*]
+
+	openw,lun,filepath+'G4_AIV_XPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.all.dat',/get_lun
+	; ASCII Columns:
+	; - c1 = event ID
+	; - c2 = plane ID
+	; - c3 = readout strip ID
+	; - c4 = -999
+	; - c5 = -999
+	; - c6 = energy dep in keV
+	; - c7 = -999    event_start = -1
+	j=0l
+	while (1) do begin
+		where_event_eq = where(aiv_xplane_event_id EQ aiv_xplane_event_id(j))
+		aiv_xplane_plane_id_temp = aiv_xplane_plane_id(where_event_eq)
+		aiv_xplane_readstreap_id_temp = aiv_xplane_readstreap_id(where_event_eq)
+		aiv_xplane_c4_temp  = aiv_xplane_c4(where_event_eq)
+		aiv_xplane_c5_temp  = aiv_xplane_c5(where_event_eq)
+		aiv_xplane_edep_temp = aiv_xplane_edep(where_event_eq)    
+		aiv_xplane_c7_temp = aiv_xplane_c7(where_event_eq)    
+	
+		for r=0l, n_elements(aiv_xplane_plane_id_temp)-1 do begin
+			printf, lun, aiv_xplane_event_id(j), aiv_xplane_plane_id_temp(r), aiv_xplane_readstreap_id_temp(r), aiv_xplane_c4_temp(r), aiv_xplane_c5_temp(r), aiv_xplane_edep_temp(r), aiv_xplane_c7_temp(r), format='(I6,I5,I5,I5,I5,F10.5,I5)'        
+		endfor
+
+		N_event_eq = n_elements(where_event_eq)
+		if where_event_eq(N_event_eq-1) LT (n_elements(aiv_xplane_event_id)-1) then begin
+		  j = where_event_eq(N_event_eq-1)+1
+		endif else break
+	endwhile
+
+	Free_lun, lun
+
+	aiv_yplane_event_id = aiv_yplane_event_id[1:*]
+	aiv_yplane_plane_id = aiv_yplane_plane_id[1:*]
+	aiv_yplane_readstreap_id = aiv_yplane_readstreap_id[1:*]
+	aiv_yplane_c4 = aiv_yplane_c4[1:*]
+	aiv_yplane_c5 = aiv_yplane_c5[1:*]
+	aiv_yplane_edep = aiv_yplane_edep[1:*]
+	aiv_yplane_c7 = aiv_yplane_c7[1:*]
+
+	openw,lun,filepath+'G4_AIV_YPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.all.dat',/get_lun
+	; ASCII Columns:
+	; - c1 = event ID
+	; - c2 = plane ID
+	; - c3 = readout strip ID
+	; - c4 = -999
+	; - c5 = -999
+	; - c6 = energy dep in keV
+	; - c7 = -999    event_start = -1
+	j=0l
+	while (1) do begin
+		where_event_eq = where(aiv_yplane_event_id EQ aiv_yplane_event_id(j))
+		aiv_yplane_plane_id_temp = aiv_yplane_plane_id(where_event_eq)
+		aiv_yplane_readstreap_id_temp = aiv_yplane_readstreap_id(where_event_eq)
+		aiv_yplane_c4_temp  = aiv_yplane_c4(where_event_eq)
+		aiv_yplane_c5_temp  = aiv_yplane_c5(where_event_eq)
+		aiv_yplane_edep_temp = aiv_yplane_edep(where_event_eq)    
+		aiv_yplane_c7_temp = aiv_yplane_c7(where_event_eq)    
+	
+		for r=0l, n_elements(aiv_yplane_plane_id_temp)-1 do begin
+			printf, lun, aiv_yplane_event_id(j), aiv_yplane_plane_id_temp(r), aiv_yplane_readstreap_id_temp(r), aiv_yplane_c4_temp(r), aiv_yplane_c5_temp(r), aiv_yplane_edep_temp(r), aiv_yplane_c7_temp(r), format='(I6,I5,I5,I5,I5,F10.5,I5)'        
+		endfor
+
+		N_event_eq = n_elements(where_event_eq)
+		if where_event_eq(N_event_eq-1) LT (n_elements(aiv_yplane_event_id)-1) then begin
+		  j = where_event_eq(N_event_eq-1)+1
+		endif else break
+	endwhile
+
+	Free_lun, lun
 endif
 
 aa_strip_event_id = aa_strip_event_id[1:*]
@@ -963,14 +1098,6 @@ aa_kalman_pos = aa_kalman_pos[1:*]
 aa_kalman_edep = aa_kalman_edep[1:*]
 aa_kalman_strip_number = aa_kalman_strip_number[1:*]
 aa_kalman_pair = aa_kalman_pair[1:*]
-   
-gams_xplane_event_id = gams_xplane_event_id[1:*]
-gams_xplane_plane_id = gams_xplane_plane_id[1:*]
-gams_xplane_readstreap_id = gams_xplane_readstreap_id[1:*]
-gams_xplane_c4 = gams_xplane_c4[1:*]
-gams_xplane_c5 = gams_xplane_c5[1:*]
-gams_xplane_edep = gams_xplane_edep[1:*]
-gams_xplane_c7 = gams_xplane_c7[1:*]
 
 ; filenamedat_aa_strip = filepath+sim_tag+'_STRIP_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+sname+'_'+ene_dis+'_'+ang_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.'+pol_string+strtrim(string(ifile),1)+'.dat'
 
@@ -1015,6 +1142,15 @@ for r=0l, n_elements(aa_kalman_event_id)-1 do begin
 endfor
 
 Free_lun, lun
+
+   
+gams_xplane_event_id = gams_xplane_event_id[1:*]
+gams_xplane_plane_id = gams_xplane_plane_id[1:*]
+gams_xplane_readstreap_id = gams_xplane_readstreap_id[1:*]
+gams_xplane_c4 = gams_xplane_c4[1:*]
+gams_xplane_c5 = gams_xplane_c5[1:*]
+gams_xplane_edep = gams_xplane_edep[1:*]
+gams_xplane_c7 = gams_xplane_c7[1:*]
 
 openw,lun,filepath+'G4_GAMS_XPLANE_AGILE'+agile_version+'_'+py_name+'_'+sim_name+'_'+stripname+'_'+sname+'_'+strmid(strtrim(string(N_in),1),0,10)+part_type+'_'+ene_type+'MeV_'+strmid(strtrim(string(theta_type),1),0,10)+'_'+strmid(strtrim(string(phi_type),1),0,10)+'.all.dat',/get_lun
 ; ASCII Columns:
